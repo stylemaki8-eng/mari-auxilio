@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Mari - Auxílio Mari</title>
+    <style>
+        /* Design Premium Sarahfreestyle */
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; touch-action: none; -webkit-tap-highlight-color: transparent; }
+        body { background-color: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; color: white; overflow: hidden; }
+        
+        .menu-container { 
+            background: #0d0d10; width: 420px; border-radius: 35px; padding: 40px; 
+            border: 1px solid #1f1f25; text-align: center; 
+            box-shadow: 0 0 50px rgba(59, 130, 246, 0.2); position: relative; z-index: 10; 
+        }
+
+        h1 { color: #3b82f6; margin-bottom: 5px; font-size: 2rem; text-transform: uppercase; letter-spacing: 2px; }
+        .sub-text { font-size: 0.85rem; color: #555; margin-bottom: 30px; }
+
+        /* Sistema de Abas */
+        .tabs { display: flex; background: #16161d; border-radius: 18px; padding: 8px; margin-bottom: 25px; }
+        .tab { flex: 1; padding: 15px; cursor: pointer; border-radius: 12px; color: #777; font-size: 1.1rem; font-weight: bold; transition: 0.3s; }
+        .tab.active { background: #2563eb; color: white; }
+
+        /* Conteúdo das Funções */
+        .content { display: none; min-height: 420px; }
+        .content.active { display: block; }
+        
+        .item { 
+            background: #16161d; margin-bottom: 12px; padding: 22px; border-radius: 20px; 
+            display: flex; justify-content: space-between; align-items: center; border: 1px solid #1f1f25; 
+        }
+        .item-info { text-align: left; }
+        .item-info b { display: block; font-size: 1.15rem; color: #fff; }
+        .item-info span { font-size: 0.85rem; color: #666; }
+
+        /* Switches Customizados */
+        .switch { width: 55px; height: 30px; position: relative; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #2c2c30; border-radius: 30px; transition: .3s; }
+        .slider:before { content: ""; position: absolute; height: 22px; width: 22px; left: 4px; bottom: 4px; background: white; border-radius: 50%; transition: .3s; }
+        input:checked + .slider { background: #3b82f6; }
+        input:checked + .slider:before { transform: translateX(25px); background: #fff; }
+
+        /* Botão de Ação */
+        .btn-main { 
+            width: 100%; padding: 20px; background: #2563eb; border: none; border-radius: 18px; 
+            color: white; font-weight: bold; cursor: pointer; margin-top: 20px; 
+            font-size: 1.2rem; text-transform: uppercase; text-decoration: none; display: inline-block; 
+        }
+        .btn-main:active { transform: scale(0.96); filter: brightness(1.1); }
+
+        /* Login */
+        .key-input { 
+            width: 100%; padding: 22px; background: #000; border: 2px solid #3b82f6; 
+            color: white; border-radius: 15px; text-align: center; margin-bottom: 20px; 
+            font-size: 1.4rem; outline: none; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu-container">
+        <div id="key-screen">
+            <h1>Mari</h1>
+            <p class="sub-text">Injetor de Sensibilidade v2.0</p>
+            <input type="text" id="input-key" class="key-input" placeholder="DIGITE A KEY">
+            <button class="btn-main" onclick="entrar()">VERIFICAR ACESSO</button>
+        </div>
+
+        <div id="main-menu" style="display: none;">
+            <h1>Mari</h1>
+            <p class="sub-text" id="engine-status">Aguardando ativação das chaves...</p>
+
+            <div class="tabs">
+                <div id="tab-f" class="tab active" onclick="showTab('funcoes')">Funções</div>
+                <div id="tab-i" class="tab" onclick="showTab('info')">Info</div>
+            </div>
+
+            <div id="funcoes" class="content active">
+                <div class="item">
+                    <div class="item-info"><b>Predisur recuo</b><span>Precisão 5x ativada</span></div>
+                    <label class="switch"><input type="checkbox" id="feat-precision" onchange="mapEngine()"><span class="slider"></span></label>
+                </div>
+                <div class="item">
+                    <div class="item-info"><b>Remover Input lag</b><span>Resposta em milissegundos</span></div>
+                    <label class="switch"><input type="checkbox" id="feat-lag" onchange="mapEngine()"><span class="slider"></span></label>
+                </div>
+                <div class="item">
+                    <div class="item-info"><b>Auxílio no final</b><span>Foco total em HS</span></div>
+                    <label class="switch"><input type="checkbox" id="feat-hs" onchange="mapEngine()"><span class="slider"></span></label>
+                </div>
+                <div class="item">
+                    <div class="item-info"><b>Travar no recoil</b><span>Zero tremedeira na mira</span></div>
+                    <label class="switch"><input type="checkbox" id="feat-recoil" onchange="mapEngine()"><span class="slider"></span></label>
+                </div>
+                <div class="item">
+                    <div class="item-info"><b>Travar 120 FPS</b><span>Fluidez de emulador</span></div>
+                    <label class="switch"><input type="checkbox" id="feat-fps" onchange="mapEngine()"><span class="slider"></span></label>
+                </div>
+                
+                <a href="freefire://" class="btn-main" onclick="playEffect()">ABRIR O FREE FIRE</a>
+            </div>
+
+            <div id="info" class="content">
+                <div style="padding-top: 80px; font-size: 1.3rem; line-height: 2;">
+                    <p><b>Proprietária:</b> Mari</p>
+                    <p><b>Engines:</b> Bezier & Linear Locked</p>
+                    <p style="color: #3b82f6;">Status: SISTEMA OTIMIZADO</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const Engine = {
+            active: false,
+            config: { precisionMult: 1.2, hsLock: 1.0, noiseFilter: 0.5, fpsInterval: 1000/60 },
+            applyFilter(val, last) { return val * (1 - this.config.noiseFilter) + last * this.config.noiseFilter; },
+            getCurve(t) { return Math.pow(1-t, 3)*0.4 + 3*Math.pow(1-t, 2)*t*0.1 + 3*(1-t)*Math.pow(t, 2)*0.3 + Math.pow(t, 3)*1; }
+        };
+
+        function mapEngine() {
+            const status = document.getElementById('engine-status');
+            Engine.config.precisionMult = document.getElementById('feat-precision').checked ? 5.0 : 1.2;
+            Engine.config.hsLock = document.getElementById('feat-hs').checked ? 1.48 : 1.0;
+            Engine.config.noiseFilter = document.getElementById('feat-recoil').checked ? 0.08 : 0.5;
+            Engine.config.fpsInterval = document.getElementById('feat-fps').checked ? 1000/120 : 1000/60;
+            status.innerText = "Mari Engine: Ativa e Sincronizada";
+            status.style.color = "#3b82f6";
+        }
+
+        let lastPos = { x: 0, y: 0 };
+        let lastDeltas = { x: 0, y: 0 };
+        let lastTime = 0;
+
+        document.addEventListener('touchmove', (e) => {
+            if(!Engine.active) return;
+            if(document.getElementById('feat-lag').checked) e.preventDefault();
+
+            const now = performance.now();
+            if (now - lastTime < Engine.config.fpsInterval) return;
+
+            const t = e.touches[0];
+            const dx = t.clientX - lastPos.x;
+            const dy = t.clientY - lastPos.y;
+            const vel = Math.sqrt(dx**2 + dy**2) / 10;
+
+            requestAnimationFrame(() => {
+                const fX = Engine.applyFilter(dx, lastDeltas.x);
+                const fY = Engine.applyFilter(dy, lastDeltas.y);
+                const factor = vel < 1.5 ? Engine.getCurve(vel) : Engine.config.precisionMult;
+                
+                // Travamento de Eixo Y para HS (Igual aos vídeos)
+                window.scrollBy(fX * factor * 0.05, (fY * factor * Engine.config.hsLock) * 0.05);
+
+                lastDeltas = { x: fX, y: fY };
+                lastTime = now;
+            });
+            lastPos = { x: t.clientX, y: t.clientY };
+        }, { passive: false });
+
+        function entrar() {
+            if(document.getElementById('input-key').value.trim().toUpperCase() === 'X') {
+                document.getElementById('key-screen').style.display = 'none';
+                document.getElementById('main-menu').style.display = 'block';
+                Engine.active = true;
+                if(navigator.vibrate) navigator.vibrate([50, 30, 50]);
+            } else { alert("Key incorreta!"); }
+        }
+
+        function showTab(type) {
+            document.getElementById('funcoes').classList.toggle('active', type === 'funcoes');
+            document.getElementById('info').classList.toggle('active', type === 'info');
+            document.getElementById('tab-f').classList.toggle('active', type === 'funcoes');
+            document.getElementById('tab-i').classList.toggle('active', type === 'info');
+        }
+
+        function playEffect() { if(navigator.vibrate) navigator.vibrate(100); }
+    </script>
+</body>
+</html>
